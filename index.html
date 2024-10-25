@@ -17,7 +17,6 @@
 3. &lt;a href="javascript:alert(3)"&gt;クリックしてください&lt;/a&gt;
       </pre
         >
-        <p>tips: console.logで各inputの結果を出力しています</p>
       </div>
 
       <div>
@@ -47,6 +46,16 @@
         <button onclick="displayUseTrustedTypes()">表示</button>
         <!-- ここにエスケープされるDOMが生成されます -->
         <div id="trustedOutput"></div>
+      </div>
+
+      <hr />
+
+      <div>
+        <h2>trustedTypesでエラーを出力する実装</h2>
+        <input type="text" id="trustedErrorInput" placeholder="" />
+        <button onclick="displayUseTrustedTypesError()">表示</button>
+        <!-- ここにエスケープされるDOMが生成されます -->
+        <div id="trustedErrorOutput"></div>
       </div>
     </div>
     </div>

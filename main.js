@@ -1,7 +1,4 @@
 import './style.css';
-import javascriptLogo from './javascript.svg';
-import viteLogo from '/vite.svg';
-import { setupCounter } from './counter.js';
 
 window.displayUnsafe = function () {
   const input = document.getElementById('unsafeInput').value;
@@ -41,4 +38,40 @@ window.displayUseTrustedTypes = function () {
   const escaped = escapeHTMLPolicy.createHTML(input);
   console.log('trustedtypes', escaped);
   document.getElementById('trustedOutput').innerHTML = escaped;
+};
+
+window.displayUseTrustedTypesError = function () {
+  const input = document.getElementById('trustedErrorInput').value;
+  const escapeHTMLPolicy = trustedTypes.createPolicy('myErrorPolicy', {
+    createHTML: (string) => {
+      // XSSの可能性がある文字列パターンをチェック
+      const xssPatterns = [
+        /<script\b[^>]*>/i,
+        /javascript:/i,
+        /data:/i,
+        /on\w+\s*=/i,
+        /style\s*=/i,
+      ];
+
+      // XSSパターンが検出された場合はエラーを投げる
+      for (const pattern of xssPatterns) {
+        if (pattern.test(string)) {
+          throw new Error('潜在的なXSSが検出されました: ' + string);
+        }
+      }
+
+      // 安全な文字列のみを許可
+      const div = document.createElement('div');
+      div.textContent = string;
+      return div.innerHTML;
+    },
+  });
+  try {
+    const escaped = escapeHTMLPolicy.createHTML(input);
+    console.log('trustedtypesError', escaped);
+    document.getElementById('trustedErrorOutput').innerHTML = escaped;
+  } catch (e) {
+    document.getElementById('trustedErrorOutput').textContent =
+      '⚠️ エラー: ' + e.message;
+  }
 };
