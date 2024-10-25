@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>XSS Demo</h1>
+      <div>
+        <h4>スクリプトのサンプル</h4>
+        <pre>
+1. &lt;img src=x onerror='alert(1)'&gt;
+2. &lt;div onmouseover='alert(2)'&gt;マウスを上に置いてください&lt;/div&gt;
+3. &lt;a href="javascript:alert(3)"&gt;クリックしてください&lt;/a&gt;
+      </pre
+        >
+        <p>tips: console.logで各inputの結果を出力しています</p>
+      </div>
+
+      <div>
+        <h2>安全ではない実装</h2>
+
+        <input type="text" id="unsafeInput" placeholder="" />
+        <button onclick="displayUnsafe()">表示</button>
+        <!-- ここにエスケープされるDOMが生成されます -->
+        <div id="unsafeOutput"></div>
+      </div>
+
+      <hr />
+
+      <div>
+        <h2>replaceでエスケープした実装</h2>
+        <input type="text" id="replaceInput" placeholder="" />
+        <button onclick="displayReplaced()">表示</button>
+        <!-- ここにエスケープされるDOMが生成されます -->
+        <div id="replaceOutput"></div>
+      </div>
+
+      <hr />
+
+      <div>
+        <h2>trustedTypesでエスケープした実装</h2>
+        <input type="text" id="trustedInput" placeholder="" />
+        <button onclick="displayUseTrustedTypes()">表示</button>
+        <!-- ここにエスケープされるDOMが生成されます -->
+        <div id="trustedOutput"></div>
+      </div>
+    </div>
+    </div>
+
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
